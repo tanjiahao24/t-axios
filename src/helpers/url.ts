@@ -1,15 +1,15 @@
-import { isDate, isObject } from './util'
+import { isDate, isPlainObject } from './util'
 
 // 进行 url 编码
 function encode(val: string): string {
   return encodeURIComponent(val)
-    .replace('/%40/g', '@')
-    .replace('/%3A/gi', ':')
-    .replace('/%24/g', '$')
-    .replace('/%2C/gi', ',')
-    .replace('/%20/g', '+')
-    .replace('/%5B/gi', '[')
-    .replace('/%5D/gi', ']')
+    .replace(/%40/g, '@')
+    .replace(/%3A/gi, ':')
+    .replace(/%24/g, '$')
+    .replace(/%2C/gi, ',')
+    .replace(/%20/g, '+')
+    .replace(/%5B/gi, '[')
+    .replace(/%5D/gi, ']')
 }
 
 // 构建 url
@@ -42,7 +42,7 @@ export function buildURL(url: string, params?: any): string {
       // 对 val 进行处理
       if (isDate(val)) {
         val = val.toISOString()
-      } else if (isObject(val)) {
+      } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       }
       parts.push(`${encode(key)}=${encode(val)}`)
