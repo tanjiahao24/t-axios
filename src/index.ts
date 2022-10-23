@@ -1,13 +1,15 @@
 // 入口文件
-import { transformRequest } from './helpers/data'
+import { transformRequest, transformResponse } from './helpers/data'
 import { processHeaders } from './helpers/headers'
 import { buildURL } from './helpers/url'
-import { AxiosRequestConfig } from './types/index'
+import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from './types/index'
 import xhr from './xhr'
 
-function axios(config: AxiosRequestConfig) {
+function axios(config: AxiosRequestConfig): AxiosPromise {
   processConfig(config)
-  xhr(config)
+  return xhr(config).then(res => {
+    return transformResponseData(res)
+  })
 }
 
 // 处理 配置
@@ -33,6 +35,13 @@ function transformRequestData(config: AxiosRequestConfig): any {
 function transformRequestHeaders(config: AxiosRequestConfig): any {
   const { headers = {}, data } = config
   return processHeaders(headers, data)
+}
+
+// 转换相应的 data
+function transformResponseData(response: AxiosResponse): AxiosResponse {
+  const { data } = response
+  response.data = transformResponse(data)
+  return response
 }
 
 export default axios

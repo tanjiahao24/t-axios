@@ -23,3 +23,25 @@ export function processHeaders(headers: any, data: any): any {
   }
   return headers
 }
+
+// 解析 headers MDN 也有对应代码
+export function parseHeaders(headers: string): any {
+  let parsed = Object.create(null)
+  if (!headers) {
+    return parsed
+  }
+
+  headers.split('\r\n').forEach(l => {
+    let [key, value] = l.split(':')
+    key = key.trim().toLowerCase()
+    if (!key) {
+      return
+    }
+    if (value) {
+      value = value.trim()
+    }
+    parsed[key] = value
+  })
+
+  return parsed
+}

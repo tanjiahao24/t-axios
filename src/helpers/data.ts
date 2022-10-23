@@ -7,3 +7,13 @@ export function transformRequest(data: any): any {
   }
   return data
 }
+
+// 转换返回的 data
+export function transformResponse(data: any): any {
+  if (typeof data === 'string') {
+    try {
+      data = JSON.parse(data)
+    } catch (e) {}
+  }
+  return data
+}
