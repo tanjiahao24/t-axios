@@ -15,12 +15,12 @@ function fromValue2Strate(value1: any, value2: any): any {
 }
 
 function deepMergeStrate(value1: any, value2: any): any {
-  if (isPlainObject(value2)) {
+  if (isPlainObject(value2) && isPlainObject(value1)) {
     return deepMerge(value1, value2)
   } else if (value2 !== undefined) {
     return value2
   } else if (isPlainObject(value1)) {
-    return deepMerge(value2)
+    return deepMerge(value1)
   } else if (value1 !== undefined) {
     return value1
   }
