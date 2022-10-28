@@ -3,6 +3,8 @@ import mergeConfig from './core/mergeConfig'
 import defaults from './defaults'
 import { extend } from './helpers/util'
 import { AxiosInstance, AxiosRequestConfig, AxiosStatic } from './types'
+import CancelToken from './cancel/CancelToken'
+import Cancel, { isCancel } from './cancel/Cancel'
 
 function createInstance(defaultConfig: AxiosRequestConfig): AxiosStatic {
   const context = new Axios(defaultConfig)
@@ -19,5 +21,9 @@ const axios: AxiosStatic = createInstance(defaults)
 axios.create = function(config: AxiosRequestConfig): AxiosInstance {
   return createInstance(mergeConfig(defaults, config))
 }
+
+axios.Cancel = Cancel
+axios.CancelToken = CancelToken
+axios.isCancel = isCancel
 
 export default axios
